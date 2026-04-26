@@ -334,7 +334,7 @@ Example: Task requires keyword `CampusConnect`, ambassador submits `https://link
 ---
 ## 🎥 Demo Video
 
-https://github.com/krishnakanth47/campus-connect/raw/main/demo.mp4
+https://drive.google.com/drive/folders/1dNKB07BpprIk2Dee-df967p_MpQXRpNA?usp=drive_link)
 
 ---
 
