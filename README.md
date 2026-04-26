@@ -332,5 +332,10 @@ Example: Task requires keyword `CampusConnect`, ambassador submits `https://link
 > Designed to maximize scores across: **Impact, Innovation, Technical Execution, UX, and Presentation**
 
 ---
+## 🎥 Demo Video
+
+https://github.com/krishnakanth47/campus-connect/raw/main/demo.mp4
+
+---
 
 *Made with ❤️ by the Campus Connect Team*
