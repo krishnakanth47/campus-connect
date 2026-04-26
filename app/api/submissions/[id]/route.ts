@@ -1,28 +1,32 @@
-import { NextRequest, NextResponse } from 'next/server';
-import store from '@/lib/store';
-import { getUserFromRequest } from '@/lib/auth';
-
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
     const user = getUserFromRequest(req);
     if (!user || user.role !== 'admin') {
       return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
     }
 
+    const { id } = await context.params;
+
     const { action, feedback } = await req.json(); // action: 'approve' | 'reject'
 
     if (!action || !['approve', 'reject'].includes(action)) {
-      return NextResponse.json({ error: 'Invalid action. Use "approve" or "reject"' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Invalid action. Use "approve" or "reject"' },
+        { status: 400 }
+      );
     }
 
-    const submission = await store.getSubmissionById(parseInt(params.id));
+    const submission = await store.getSubmissionById(parseInt(id));
     if (!submission) {
       return NextResponse.json({ error: 'Submission not found' }, { status: 404 });
     }
 
     const newStatus = action === 'approve' ? 'approved' : 'rejected';
 
-    const updated = await store.updateSubmission(parseInt(params.id), {
+    const updated = await store.updateSubmission(parseInt(id), {
       status: newStatus,
       feedback: feedback || null,
       approved_by: user.userId,
@@ -50,10 +54,16 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
     return NextResponse.json({
       submission: updated,
-      message: action === 'approve' ? 'Submission approved and points awarded!' : 'Submission rejected.',
+      message:
+        action === 'approve'
+          ? 'Submission approved and points awarded!'
+          : 'Submission rejected.',
     });
   } catch (error) {
     console.error('Review submission error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
