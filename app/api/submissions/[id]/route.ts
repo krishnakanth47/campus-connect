@@ -1,38 +1,28 @@
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+import { NextRequest, NextResponse } from 'next/server';
+import store from '@/lib/store';
+import { getUserFromRequest } from '@/lib/auth';
+
+export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const user = getUserFromRequest(req);
     if (!user || user.role !== 'admin') {
-      return NextResponse.json(
-        { error: 'Admin access required' },
-        { status: 403 }
-      );
+      return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
     }
-
-    const { id } = params;
 
     const { action, feedback } = await req.json(); // action: 'approve' | 'reject'
 
     if (!action || !['approve', 'reject'].includes(action)) {
-      return NextResponse.json(
-        { error: 'Invalid action. Use "approve" or "reject"' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid action. Use "approve" or "reject"' }, { status: 400 });
     }
 
-    const submission = await store.getSubmissionById(parseInt(id));
+    const submission = await store.getSubmissionById(parseInt(params.id));
     if (!submission) {
-      return NextResponse.json(
-        { error: 'Submission not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Submission not found' }, { status: 404 });
     }
 
     const newStatus = action === 'approve' ? 'approved' : 'rejected';
 
-    const updated = await store.updateSubmission(parseInt(id), {
+    const updated = await store.updateSubmission(parseInt(params.id), {
       status: newStatus,
       feedback: feedback || null,
       approved_by: user.userId,
@@ -48,7 +38,7 @@ export async function PATCH(
       }
     }
 
-    // If rejecting a previously approved submission, deduct points
+    // If rejecting a previously auto-approved submission, deduct points
     if (action === 'reject' && submission.status === 'approved') {
       const task = await store.getTaskById(submission.task_id);
       const submitter = await store.getUserById(submission.user_id);
@@ -60,16 +50,10 @@ export async function PATCH(
 
     return NextResponse.json({
       submission: updated,
-      message:
-        action === 'approve'
-          ? 'Submission approved and points awarded!'
-          : 'Submission rejected.',
+      message: action === 'approve' ? 'Submission approved and points awarded!' : 'Submission rejected.',
     });
   } catch (error) {
     console.error('Review submission error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
