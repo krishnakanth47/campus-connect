@@ -64,6 +64,11 @@ Traditional campus ambassador programs rely on fragmented tools — WhatsApp gro
 - Pre-loaded demo profiles for `torvalds`, `mojombo`, `octocat`
 - 1-hour response caching to prevent API rate limits
 
+### 🎨 Design & Branding
+- **Custom Branding**: Fully integrated "Campus Connect" logo across login, sidebar, and loading states.
+- **Modern Aesthetics**: Rich mesh backgrounds, glassmorphism components, and glowing UI elements.
+- **Premium UX**: Smooth micro-animations, canvas-based confetti, and responsive role-based layouts.
+
 ---
 
 ## 🛠️ Tech Stack
@@ -114,7 +119,8 @@ campus-connect/
 │       ├── submissions/[id]/    # PATCH approve/reject
 │       ├── leaderboard/         # GET ranked ambassadors
 │       ├── analytics/           # GET admin analytics
-│       └── github/              # POST analyze GitHub profile
+│       ├── github/              # POST analyze GitHub profile
+│       └── copy-logo/           # GET utility to sync project logo
 ├── components/
 │   ├── Sidebar.tsx              # Collapsible sidebar, role-based nav
 │   ├── Toast.tsx                # Notification system + hook
@@ -161,7 +167,11 @@ cp .env.local.example .env.local
 # 3. Start PostgreSQL and create database
 createdb campus_connect
 
-# 4. Run development server
+# 4. Push schema and seed initial data
+npm run db:push
+npm run db:seed
+
+# 5. Start development server
 npm run dev
 ```
 
@@ -224,6 +234,7 @@ GET  /api/leaderboard   — Ranked ambassador list
 GET  /api/analytics     — Admin analytics data
 POST /api/github        — Analyze GitHub profile
 GET  /api/github?username=x — Get cached analysis
+GET  /api/copy-logo     — Sync logo from root to public folder
 ```
 
 ---
