@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import logo from '@/logo.png';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -85,11 +87,7 @@ export default function LoginPage() {
         <div className="hidden lg:flex flex-col justify-center p-8">
           {/* Logo */}
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl flex items-center justify-center shadow-glow">
-              <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
+            <Image src={logo} alt="Campus Connect Logo" className="w-12 h-12 object-contain" priority />
             <div>
               <h1 className="text-xl font-display font-bold text-white">Campus Connect</h1>
               <p className="text-xs text-dark-400">Ambassador Platform</p>
@@ -141,11 +139,7 @@ export default function LoginPage() {
         <div className="flex flex-col justify-center">
           {/* Mobile logo */}
           <div className="flex items-center gap-3 mb-8 lg:hidden">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-glow">
-              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
+            <Image src={logo} alt="Campus Connect Logo" className="w-10 h-10 object-contain" priority />
             <div>
               <h1 className="text-lg font-display font-bold text-white">Campus Connect</h1>
               <p className="text-xs text-dark-400">Ambassador Platform</p>

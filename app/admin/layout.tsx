@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
+import Image from 'next/image';
+import logo from '@/logo.png';
 
 interface User {
   id: number;
@@ -47,11 +49,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className="min-h-screen bg-dark-950 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl flex items-center justify-center shadow-glow animate-bounce-subtle">
-            <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
+          <Image src={logo} alt="Campus Connect Logo" className="w-12 h-12 object-contain animate-bounce-subtle" priority />
           <div className="spinner" />
           <p className="text-dark-400 text-sm">Loading Campus Connect...</p>
         </div>

@@ -27,6 +27,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/logo.png" />
       </head>
       <body className="font-sans bg-dark-950 text-dark-100 antialiased">
         {children}

@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
+import Image from 'next/image';
+import logo from '@/logo.png';
 
 interface User {
   id: number;
@@ -104,11 +106,7 @@ export default function Sidebar({ user }: SidebarProps) {
         <div className="p-4 flex items-center justify-between border-b border-dark-700/50 min-h-[72px]">
           {!collapsed && (
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-glow shrink-0">
-                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
+              <Image src={logo} alt="Campus Connect Logo" className="w-9 h-9 object-contain shrink-0" priority />
               <div>
                 <div className="text-sm font-display font-bold text-white">Campus Connect</div>
                 <div className="text-[10px] text-dark-500 capitalize">{user.role} Portal</div>
@@ -116,10 +114,8 @@ export default function Sidebar({ user }: SidebarProps) {
             </div>
           )}
           {collapsed && (
-            <div className="w-9 h-9 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-glow mx-auto">
-              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+            <div className="mx-auto">
+              <Image src={logo} alt="Campus Connect Logo" className="w-9 h-9 object-contain" priority />
             </div>
           )}
           <button
