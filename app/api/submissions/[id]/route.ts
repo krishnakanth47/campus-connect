@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import store from '@/lib/store';
 import { getUserFromRequest } from '@/lib/auth';
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await context.params;
     const user = getUserFromRequest(req);
     if (!user || user.role !== 'admin') {
       return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
@@ -15,14 +16,14 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       return NextResponse.json({ error: 'Invalid action. Use "approve" or "reject"' }, { status: 400 });
     }
 
-    const submission = await store.getSubmissionById(parseInt(params.id));
+    const submission = await store.getSubmissionById(parseInt(id));
     if (!submission) {
       return NextResponse.json({ error: 'Submission not found' }, { status: 404 });
     }
 
     const newStatus = action === 'approve' ? 'approved' : 'rejected';
 
-    const updated = await store.updateSubmission(parseInt(params.id), {
+    const updated = await store.updateSubmission(parseInt(id), {
       status: newStatus,
       feedback: feedback || null,
       approved_by: user.userId,
