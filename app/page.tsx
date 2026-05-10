@@ -313,9 +313,20 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <p className="text-center text-xs text-dark-600 mt-4">
-            Campus Connect © 2024 — Intelligent Ambassador Management
-          </p>
+          <div className="text-center text-xs text-dark-600 mt-4 space-y-1">
+            <p>Campus Connect © 2024 — Intelligent Ambassador Management</p>
+            <p>
+              Made by{' '}
+              <a 
+                href="https://krishnakanth-portfolio47.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary-400 hover:text-primary-300 transition-colors font-medium"
+              >
+                Krishnakanth J
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
